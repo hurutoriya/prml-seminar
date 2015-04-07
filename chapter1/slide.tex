@@ -50,11 +50,10 @@
 \begin{frame}
   \frametitle{自己紹介}
     \begin{itemize}
-      \item 名前:上田隼也
+      \item 名前:上田隼也(@hurutoriya)
       \item 筑波大学大学院1年(予定) \\
       \item 情報数理研究室所属
       \item 研究分野 : 画像認識・機械学習
-      \item Twitter : @hurutoriya
     \end{itemize}
 \end{frame}
 
@@ -78,7 +77,7 @@
   PRML輪講の予定と発表担当者の策定
   \begin{figure}[htb]
     \centering
-    \includegraphics[width=2.5cm,clip]{images/prml.eps}
+    \includegraphics[width=2.5cm,clip]{res/prml.eps}
   \end{figure}
 \end{frame}
 
@@ -90,10 +89,10 @@
   \\
   例) 手書き数字の認識
    
-  入力として$28 \times 28$ の大きさの手書き数字の画像がある。入力データは$784$次元の実数値ベクトル$x$で表現できる。ベクトル$x$を入力として受け取り、それが$0 \ldots 9 $のどの数字を表しているかを出力する機械を作る。
+  入力として$28 \times 28$ の大きさの手書き数字の画像がある。入力データは$784$次元の実数値ベクトル$x$で表現できる。ベクトル$\bm{x}$を入力として受け取り、それが$0 \ldots 9 $のどの数字を表しているかを出力する機械を作る。
   \begin{figure}[htb]
     \centering
-    \includegraphics[width=1.5cm,clip]{images/handwritten.eps}
+    \includegraphics[width=1.5cm,clip]{res/handwritten.eps}
     \caption{手書き数字の画像例}
   \end{figure}
 \end{frame}
@@ -120,10 +119,20 @@
   \frametitle{実現方法(2)}
     \begin{itemize}
       \item 訓練(training), 学習(leaning) 段階 : \\ training setのみでモデル化されている状態
-      \item テスト集合(test set) : 訓練集合以外のデータ(未知のデータ)
-      \item 汎化(generalization) : 訓練集合以外のデータ(未知のデータ)に対して適応可能な能力
+      \item テスト集合(test set) : \\ 訓練集合以外のデータ(未知のデータ)
+      \item 汎化(generalization) : \\ 訓練集合以外のデータ(未知のデータ)に対して適応可能にさせること
     \end{itemize}
      実問題として入力データは大きな多様性を持つ。$\to$ \\ 汎化が中心的な課題となる。
+\end{frame}
+
+\begin{frame}
+  \frametitle{例)Ajaxを使った手書き文字認識}
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[width=6.0cm,clip]{res/ajax.eps}
+    \caption{Ajaxを使った手書き文字認識}
+  \end{figure}
+  参考: \textcolor{blue}{http://chasen.org/~taku/software/ajax/hwr/}
 \end{frame}
 
 \begin{frame}
@@ -157,7 +166,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{教科学習(reinforcement learning)(1)}
+  \frametitle{強化学習(reinforcement learning)(1)}
   教科学習(reinforcement learning) : ある与えられた条件下で、報酬を最大化するような適当な行動を見つける問題。
   \\
   状態と行動の系列から環境との相互作用を通じて学習を行う(行動基準は直近の報酬だけではなく、過去の行動も参考にされる)。
@@ -171,7 +180,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{教科学習(reinforcement learning)(2)}
+  \frametitle{強化学習(reinforcement learning)(2)}
   下記の２つを行い強化学習を行う(トレードオフの関係)。
   \begin{itemize}
     \item 探査(exploration) : 新規の手がどれほど有効なのかを探す
@@ -180,12 +189,125 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{第1章で導入する3つの重要なツール}
+  \frametitle{第1章で導入する3つの重要な道具}
   \begin{enumerate}
     \item 確率論
     \item 決定理論
     \item 情報理論
   \end{enumerate}
+\end{frame}
+
+\subsection{1.1 多項式曲線フィッティング}
+\begin{frame}
+  \frametitle{1.1 \ 多項式曲線フィッティング}
+  訓練データ \\
+  入力 : $N$個の観測値$x$を並べた $\bm{x} = (x_1, \dots, x_N)^T$ \\
+  出力 : それぞれに対応する観測値 $\bm{t} = (t_1, \dots, t_N)^T$ \\
+ 
+  未知の入力変数$x$に対して目標変数を予測したい$t$ (汎化)\\
+  
+  目標とするモデルは$\sin{2 \pi x}$、訓練データはノイズを乗せて$N=10$で与えられる。
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[width=4.0cm,clip]{res/fitting.eps}
+    \caption{ex)N=10で訓練データが与えられている}
+  \end{figure}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{1.1 \ 多項式曲線フィッティング}
+  \begin{gather*}
+    y(x,\bm{w}) = w_0 x^0 + w_1 x^1 + \dots + w_M x^{M} = \sum_{j=0}^{M} w_j x^j
+  \end{gather*}
+  $M$:多項式の次数(order) \\
+  $\omega$:多項式の係数、まとめて$\bm{\omega}$で表す \\
+  \begin{gather*}
+    E(\bm{w}) = \frac{1}{2} \sum_{n=1}^{N} \{ y(x_n,\bm{w})- t_n \}^2
+  \end{gather*}
+  訓練データに多項式をあてはめることで、係数の値を求めたい $\to$ 誤差関数(Error Function)の最小化を目指す。
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fitting Order Case:M=0,1}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fitting Order Case:M=3,9}
+\end{frame}
+
+\begin{frame}
+  \frametitle{過学習と平均二乗平方根誤差}
+  9次でフィッティングした場合、\textcolor{red}{過学習}(over-fitting)
+  \\
+  \textcolor{blue}{機械学習の目標}:未知のデータに対して精度の高い予測(汎化)
+  \begin{gather*}
+    E_{RMS} = \sqrt{2E(\bm{w})/N}
+  \end{gather*}
+  平均二乗平方根誤差(root-mean-square error,RMS error)
+  \\
+  \begin{itemize}
+    \item Nで割ることでサンプル数のギャップを消す
+    \item 平方根を取ることで、元の尺度に戻す
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{データセットのサイズに応じた過学習の様子}
+\end{frame}
+\begin{frame}
+  \frametitle{誤差関数の正則化(regularization)過学習を制御}
+  \begin{gather*}
+    E(\bm{w}) = \frac{1}{2} \sum_{n=1}^{N} \{ y(x_n,\bm{\omega})- t_n \}^2 + \frac{\lambda}{2}||\bm{w} ||^2
+  \end{gather*}
+  ２次の正則化の場合、リッジ回帰(ridge regression)
+\end{frame}
+
+\begin{frame}
+  \frametitle{}
+  検証用集合(Validation set):$\bm{w}$を決定するためにデータセット ホールド・アウト集合(hold-out set)とも呼ばれる。
+  
+  \textcolor{red}{欠点}: 貴重なデータを無駄にする
+\end{frame}
+
+\subsection{1.2 確率論}
+
+\begin{frame}
+  \frametitle{確率論}
+  データにはノイズが必ず付随し、データセットのサイズも有限である。\textcolor{red}{不確実性}が重要な概念となる。
+  
+  \begin{block}{確率論の概念を簡単に説明}
+    \begin{figure}[htb]
+      \centering
+      \includegraphics[width=4.0cm,clip]{res/probability.eps}
+      \caption{赤と青、２つの箱がある。赤の箱にはりんごが2個、オレンジが6個、青の箱にはりんごが3個、オレンジが一個入っている。赤の箱を40\%,青の箱を60\%で選び、果物は同じ確からしさで選ぶ。}
+    \end{figure}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{確率の基本的法則}
+  \begin{itemize}
+    \item 確率の加法定理
+    \item 確率の乗法定理
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{}
+\end{frame}
+\begin{frame}
+  \frametitle{}
+\end{frame}
+\begin{frame}
+  \frametitle{}
+\end{frame}
+\begin{frame}
+  \frametitle{}
+\end{frame}
+\begin{frame}
+  \frametitle{}
+\end{frame}
+\begin{frame}
+  \frametitle{}
 \end{frame}
 
 \end{document}
