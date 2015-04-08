@@ -286,13 +286,34 @@
 
 \begin{frame}
   \frametitle{確率の基本的法則}
-  \begin{itemize}
-    \item 確率の加法定理
-    \item 確率の乗法定理
-  \end{itemize}
+  \begin{description}
+    \item[確率の加法定理(Sum rule)]
+      \begin{gather*}
+        p(X)=\sum_{Y} p(X,Y)
+      \end{gather*}
+    \item[確率の乗法定理(Prduct rule)]
+      \begin{gather*}
+        p(X,Y)=p(Y|X)p(X)
+      \end{gather*}
+    \item[ベイズの定理(Bay's theorem)]
+      \begin{gather*}
+        p(Y|X) = \frac{p(X|Y)p(Y)}{p(X)}
+      \end{gather*}
+  \end{description}
 \end{frame}
 \begin{frame}
-  \frametitle{}
+  \frametitle{ベイズの定理の直感的な説明}
+    \begin{figure}[htb]
+      \centering
+      \includegraphics[width=4.0cm,clip]{res/probability.eps}
+    \end{figure}
+  \begin{description}
+    \item[事前確率(prior probability)] \hfill \\
+      事前に得られる確率値 $p(Box)$
+    \item[事後確率(poeterior probability)] \hfill \\
+      果物を選んだ後確定する確率 $p(Box|Fruit)$
+  \end{description}
+  一旦果物がオレンジだとわかれば、赤い箱はオレンジの数が多い$\to$赤い箱である確率が高くなる。
 \end{frame}
 \begin{frame}
   \frametitle{}
