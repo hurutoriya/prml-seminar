@@ -51,7 +51,7 @@
   \frametitle{自己紹介}
     \begin{itemize}
       \item 名前:上田隼也(@hurutoriya)
-      \item 筑波大学大学院1年(予定) \\
+      \item 筑波大学大学院1年 Go to Doctor course :)
       \item 情報数理研究室所属
       \item 研究分野 : 画像認識・機械学習
     \end{itemize}
@@ -63,7 +63,7 @@
   \frametitle{この勉強会について}
   \begin{itemize}
     \item パターン認識と機械学習についての輪講です \\
-    機械学習とパターン認識の基礎を理解、実用レベルで使いこなせ事を目的にセミナーを開催していきます
+    機械学習とパターン認識の基礎を理解、実用レベルで使いこなす事を目的にセミナーを開催していきます
     \item 2015年を目処に一周予定
     \item 受講者には基礎的な微積分・線形代数・確率統計の知識を前提としています
     \item 資料中のサンプルコードはPythonを採用しています。
@@ -71,14 +71,14 @@
   \end{itemize}
 \end{frame}
 
-\subsection{PRML Seminar \#1 内容}
+\subsection{PRML輪講 \#2 内容}
 \begin{frame}
-  \frametitle{今回の内容}
-  PRML輪講の予定と発表担当者の策定
+  \frametitle{今回の担当}
   \begin{figure}[htb]
     \centering
     \includegraphics[width=2.5cm,clip]{res/prml.eps}
   \end{figure}
+  1.1-2.3.4. (長すぎてダレるかもしれません。でも頑張ります)
 \end{frame}
 
 \section{第$1$章 \enspace 序論}
@@ -303,30 +303,188 @@
 \end{frame}
 \begin{frame}
   \frametitle{ベイズの定理の直感的な説明}
-    \begin{figure}[htb]
-      \centering
-      \includegraphics[width=4.0cm,clip]{res/probability.eps}
-    \end{figure}
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[width=4.0cm,clip]{res/probability.eps}
+  \end{figure}
+  どの箱を選びましたか?
   \begin{description}
     \item[事前確率(prior probability)] \hfill \\
       事前に得られる確率値 $p(Box)$
-    \item[事後確率(poeterior probability)] \hfill \\
+    \item[事後確率(posterior probability)] \hfill \\
       果物を選んだ後確定する確率 $p(Box|Fruit)$
   \end{description}
   一旦果物がオレンジだとわかれば、赤い箱はオレンジの数が多い$\to$赤い箱である確率が高くなる。
 \end{frame}
+
+\begin{frame}
+  \frametitle{1.2.1 連続変数への拡張}
+  \begin{description}
+    \item[確率密度(probability density) 対象:連続値(continuous value)] \hfill \\
+      連続値である変数$x$が区間$(x,x + \delta x)$に入る確率が$\delta x \to 0$で与えられた時の$x$上の$p(x)$
+      \\
+      \begin{enumerate}
+        \item $p(x) \geq 0$
+        \item $\int_{-\infty}^{\infty} p(x) dx = 1$
+      \end{enumerate}
+    \item[確率質量(probability mass) 対象:離散集合(discrete set)] \hfill \\
+      離散変数である$x$がある$x$になる確率$p(x)$
+    \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{1.2.2 期待値と分散について}
+  \begin{description}
+    \item[期待値(expectation)] \hfill \\
+      ある関数$f(x)$の確率分布$p(x)$下での平均値
+    \begin{description}
+      \item[離散分布] $\mathbb{E}[f] = \sum_{x} p(x)f(x)$
+      \item[連続変数] $\mathbb{E}[f] = \int p(x)f(x)dx$
+    \end{description}
+    \item[分散(variance)]
+    \begin{align*}
+      \rm{var}[f] &= \mathbb{E}[(f(x)-\mathbb{E}[f(x)])^2] \\
+                  &= \mathbb{E}[f(x)^2 -2f(x)\mathbb(E)[f(x)]  + \mathbb{E}[f(x)]^2] \\
+                  &= \mathbb{E}[f(x)^2 -2f(x)\mathbb(E)[f(x)]  + \mathbb{E}[f(x)]^2] \\
+                  &= \mathbb{E}[f(x)^2] -2\mathbb{E}[f(x)]\mathbb(E)[f(x)]  + \mathbb{E}[f(x)]^2 \\
+                  &= \mathbb{E}[f(x)^2] -\mathbb{E}[f(x)]^2 \quad \textcolor{blue}{\rm{seminar1.5}}
+    \end{align*}
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{共分散(covariance)}
+    \begin{align*}
+      \rm{cov}[x,y] &= \mathbb{E}_{x,y}[(x-\mathbb{E}[x])(y-\mathbb{E}[y])] \\
+                    &= \mathbb{E}_{x,y}[xy + \mathbb{E}[x]\mathbb{E}[y] -x\mathbb{E}[y] -y\mathbb{E}[x]] \\
+                    &= \mathbb{E}_{x,y}[xy] +\mathbb{E}_{x,y}[\mathbb{E}[x]\mathbb{E}[y]] -\mathbb{E}_{x,y}[x\mathbb{E}[y]] -\mathbb{E}_{x,y}[y\mathbb{E}[x]] \\
+                    &= \mathbb{E}_{x,y}[xy] +\mathbb{E}[x]\mathbb{E}[y] -\mathbb{E}[x]\mathbb{E}[y]] -\mathbb{E}[y]\mathbb{E}[x] \\
+                    &= \mathbb{E}_{x,y}[xy] -\mathbb{E}[x]\mathbb{E}[y] \\
+                    &= \mathbb{E}_{x,y}[xy] -\mathbb{E}[x]\mathbb{E}[y] (x,y \rm{:independ})\\
+                    &= \mathbb{E}[x]\mathbb{E}[y] -\mathbb{E}[x]\mathbb{E}[y] (x,y \rm{:independ})\\
+                    &= 0 \quad \textcolor{blue}{\rm{seminar1.6}}
+    \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{1.2.3 Frequentist VS Bayesian}
+  \begin{description}
+    \item[Frequentist] \hfill \\
+      確率をランダムな繰り返し的試行の頻度とみなす
+    \item[Bayesian] \hfill \\
+      不確実性の度合いを確率とする
+      
+      例)\textcolor{red}{この世界に何度も繰り返し行うことができる事象がどれだけあるか考えてみて欲しい。}
+      
+      南極の氷が喪失するなど不確かな事象が起きたとしよう。年間どの程度溶けているかの情報を得ることで、その情報を適応することで南極の氷が喪失する不確かさを予測する。
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{1.2.3 Likelifood function  working on Frequentist, Bayesian}
+  \begin{description}
+    \item[尤度関数(likelihood function)] \hfill \\
+      $p(Data|param)$ \quad データに対する評価。パラメータの関数とみなせる。
+    \item[Frequentist] \hfill \\
+      パラメータは固定されているものと考えられている。データの分布を考慮して、パラメータは決定される。
+    \item[Bayesian] \hfill \\
+      データは唯一に定まり、パラメータに関する不確実性はwの確率分布として表現される。
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bayesianの利点}
+  事前知識を自然に導入できること
+
+  \begin{block}{例) Frequentistにおける観測に偏りが発生した場合の確率}
+    公平に表・裏がでるコインを3回投げて毎回表がでた。古典的な最尤推定では、表が出る確率は1になってしまう。
+  \end{block}
+  \begin{description}
+    \item[尤度] \hfill \\
+      尤度は確率と数値的に同じである。
+      \\
+      例)サイコロを振って1が三回連続同じ物が出る同時確率と尤度は同値である。
+      
+      違いは、\textcolor{blue}{確率}は「事象の確率」であり、\textcolor{blue}{尤度}は「観測データ下での仮説の尤度」である。
+
+      (likelihood for a hypothesis given a set of observations)
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{1.2.4 Gaussian distribution}
+  \begin{gather*}
+    N(x|\mu, \sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp\{-\frac{1}{2\sigma^2}(x-\mu)^2 \}
+  \end{gather*}
+  params: $\mu,\sigma^2$
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[width=6.5cm,clip]{res/gasussiandist.eps}
+    \caption{$\mu =0,\sigma=1$}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{1.2.5 Re:Fitting curve}
+  Bayesianにおける曲線フィッティング
+  \begin{gather*}
+    p(t|x,\bm{w},\beta)=N(t|y(x,\bm{w}),\beta^{-1})
+  \end{gather*}
+  分布の逆分散に相当するパラメータ $\beta$を定義。
+  
+  訓練データ${\bm{x},\bm{t}}$を使って、未知のパラメータ$\bm{w},\beta$を求めるのに最尤推定を用いる。
+  \begin{gather*}
+    p(\bm{t}|\bm{x},\bm{w},\beta)=\prod_{n=1}^{N} N(t_n | y(x_n,\bm{w}),\beta^{-1})
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Maximum likelifood function}
+  尤度関数を最大化するさいには、対数を用いる。利点として
+  \begin{enumerate}
+    \item 乗算が加算に変化
+    \item 確率は少数で表現されるので、乗算を行うとアンダーフローが頻発
+  \end{enumerate}
+  \begin{gather*}
+    p(\bm{t}|\bm{x},\bm{w},\beta)=\prod_{n=1}^{N} N(t_n | y(x_n,\bm{w}),\beta^{-1})
+  \end{gather*}
+  \begin{gather*}
+    \ln{p(\bm{t}|\bm{x},\bm{w},\beta)} = -\frac{\beta}{2}\sum_{n=1}^{N} \{ y(x_n,\bm{w}) - t_n \}^2 + \frac{N}{2},\ln{\beta} -\frac{N}{2}ln{2\pi}
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{予測分布(predictive distribution)}
+  パラメータベクトル$\bm{w}_{ML}$をまず決定し、$\beta_{ML}$を推定する。
+  \begin{gather*}
+    \frac{1}{\beta_{ML}}=\frac{1}{n} \sum_{n=1}^{N} \{ y(x_n,\bm{w}_{ML})- t_n \}^2
+  \end{gather*}
+  $\beta_{ML}$が決定されたことにより予測分布という形で$t$の確率分布を考えることができる。
+  \begin{gather*}
+    p(\bm{t}|\bm{x},\bm{w},\beta)=\prod_{n=1}^{N} N(t_n | y(x_n,\bm{w}),\beta^{-1})
+  \end{gather*}
+
+\end{frame}
+
+\begin{frame}
+\end{frame}
+
 \begin{frame}
   \frametitle{}
 \end{frame}
+
 \begin{frame}
   \frametitle{}
 \end{frame}
+
 \begin{frame}
   \frametitle{}
 \end{frame}
+
 \begin{frame}
   \frametitle{}
 \end{frame}
+
 \begin{frame}
   \frametitle{}
 \end{frame}
