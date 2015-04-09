@@ -463,16 +463,36 @@
   \begin{gather*}
     p(\bm{t}|\bm{x},\bm{w},\beta)=\prod_{n=1}^{N} N(t_n | y(x_n,\bm{w}),\beta^{-1})
   \end{gather*}
+\end{frame}
 
+\subsection{1.4次元の呪い}
+\begin{frame}
+  \frametitle{実世界問題への応用}
+  曲線フィッティングでは、入力パラメータは一つ。現実問題では入力パラメータは複数個存在するのが当たり前である。
+  
+  自分たちは3次元の存在。4次元以上の空間に関しては\textcolor{blue}{幾何的直感}は働きづらい。
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[width=4.5cm,clip]{res/curse_dim.eps}
+    \caption{3クラス存在するデータセットの散布図、わかりやすいように２次元の部分空間へ}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
+  \frametitle{割り当て方法の提案}
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[width=4.5cm,clip]{res/curse_dim_grid.eps}
+    \caption{同グリッド内で最も多いクラスを割り当てる}
+  \end{figure}
+  高次元に有効な２つの性質
+  \begin{enumerate}
+    \item 実データでも有効なデータは低次元に集中している
+    \item データは滑らかな事が多い(局所的に)ので、内挿により対応する \hfill \\
+      学習モデルを適用する必要はなく、内挿で事足りる
+  \end{enumerate}
 \end{frame}
-
-\begin{frame}
-  \frametitle{}
-\end{frame}
-
+\subsection{1.5 決定理論}
 \begin{frame}
   \frametitle{}
 \end{frame}
