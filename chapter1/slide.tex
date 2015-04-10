@@ -494,6 +494,102 @@
 \end{frame}
 \subsection{1.5 決定理論}
 \begin{frame}
+  \frametitle{About decision theory}
+  入力ベクトル$\bm{x}$と目標変数$t$があり、$\bm{x}$の新たな値に対して対応する$t$を求めたい。
+  \begin{description}
+    \item[回帰問題]
+    $t$は連続変数
+    \item[クラス分類]
+    $t$はクラスラベル
+    \item[推論(inference)]訓練データ${\bm{x},t}$から同時確率分布$p(\bm{x},\bm{t})$を求めること
+  \end{description}
+  決定理論の主題は推論で得られた確率分布$t$を予測し決定すること。
+\end{frame}
+
+\begin{frame}
+  \frametitle{key of decision theory}
+  \begin{itemize}
+    \item Berger, James O. Statistical decision theory and Bayesian analysis. Springer Science \& Business Media, 1985.    \item Bather, John. "Decision Theory.A n Introduction to Dynamic Programming and Sequential Decisions." (2000).
+    APA
+  \end{itemize}
+  例) 患者のX線画像をベクトル化した$\bm{x}$を使用して、その患者が癌かどうかをクラス$C_1$(癌患者),$C_2$(非癌患者)にわけたい。($p(C_k|\bm{x}$を求めたい)
+  
+  \begin{gather*}
+    p(C_k|\bm{x}) = \frac{p(\bm{x}|C_k)p(C_k)}{p(\bm{x})}
+  \end{gather*}
+  $p(C_k)$はX線画像を適用する前に人間が癌にかかる事前確率、\\ $p(C_k|\bm{x})$はX線画像から得られた情報を使用してベイズの定理を用いて修正した事後確率である。
+\end{frame}
+
+\begin{frame}
+  \frametitle{some decision rule}
+  \begin{description}
+    \item[損失関数(loss function)]
+      決定・行動に付随する損失を表す関数
+
+      癌患者のクラス分類で、どちらが患者により大きい損失を与えるだろうか?
+      \begin{itemize}
+        \item 癌でない人を癌と診断する
+        \item 癌の人を癌と診断する
+      \end{itemize}
+    \item[棄却オプション(reject option)]
+      決定が困難な場合には、決定を避ける選択
+  \begin{figure}[htb]
+    \centering
+    \includegraphics[width=4.5cm,clip]{res/reject_option.eps}
+  \end{figure}
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{1.5.4 inferense and decision}
+  推論段階$\to$決定段階への３つのアプローチ
+  \begin{description}
+    \item[生成モデル(generative model)] \hfill \\
+       クラスごとにクラスの条件付き密度$p(x|C_k)$を決定する推論問題を解く。そして$p(C_k)$も求めて、事後確率$p(C_k|x)$を求める。そして決定理論によりクラスに割り当てる。出力だけでななく入力もモデル化されるので、データの生成も可能になる。
+    \item[識別モデル(discriminative model)] \hfill \\
+      クラス事後確率$p(C_k|\bm{x})$を決定する推論問題を解き、決定理論を用いて新たな$\bm{x}$をクラスに割り当てる。
+    \item[識別関数(discriminative function)]
+      推論せずに直接決定する。各入力$\bm{x}$から直接クラスラベルへと写像する。
+  \end{description}
+\end{frame}
+
+\subsection{1.6 情報理論}
+\begin{frame}
+  \frametitle{情報量とエントロピー}
+  ある離散確率変数$x$があるとする。
+
+  $h(x) = -\log_{2}p(x)$ : 情報量を表す
+  
+  $H[x] = - \sum_{x} p(x)\log_{2}p(x)$ : 確率変数$x$のエントロピー
+\end{frame}
+
+\begin{frame}
+  \frametitle{}
+  確率変数$x$を与え、8個の可能な状態を等確率で取る。
+  
+  その値を受信者に3bitの長さにして送る。\\この変数のエントロピーは、
+  \begin{gather*}
+    H[x] = -8 \times \frac{1}{8}\log_{2}\frac{1}{8}=3bit
+  \end{gather*}
+
+  次に$x$は${a,b,c,d,e,f,g}$の8この可能な状態をとり、$\{\frac{1}{2},\frac{1}{4},\frac{1}{8},\frac{1}{16},\frac{1}{64},\frac{1}{64},\frac{1}{64},\frac{1}{64} \}$の確率で与えられる。
+  その際のエントロピーは
+  \begin{align*}
+    H[x] &= -\frac{1}{2} \log_{2} \frac{1}{2} -\frac{1}{4}\log_{2}\frac{1}{4} -\frac{1}{8}\log_{2}\frac{1}{8} -\frac{1}{16}\log_{2}\frac{1}{16} -\frac{4}{64}\log_{2}\frac{1}{64} \\
+         &= 2bit
+  \end{align*}
+  確率の分布が非一様なものよりも、一様な分布のほうがエントロピーは高い事がわかる。
+\end{frame}
+
+\begin{frame}
+  \frametitle{}
+\end{frame}
+
+\begin{frame}
+  \frametitle{}
+\end{frame}
+
+\begin{frame}
   \frametitle{}
 \end{frame}
 
@@ -508,5 +604,14 @@
 \begin{frame}
   \frametitle{}
 \end{frame}
+
+\begin{frame}
+  \frametitle{}
+\end{frame}
+
+\begin{frame}
+  \frametitle{}
+\end{frame}
+
 
 \end{document}
