@@ -81,6 +81,57 @@
   2$\to$ 2.3.4 
 \end{frame}
 
-\section{第$2$章 \enspace 序論}
+\section{第$2$章 \enspace 確率分布}
+\begin{frame}
+  \frametitle{Introduction}
+  1章では、確率分布を求める推論が大事だということを証明した。
+  
+  \textcolor{blue}{密度推定(}density estimation):観測値から確率分布$p(x)$をモデル化
+  
+  密度推定は基本的に\textcolor{red}{不良設定問題}である。
+  
+  対象とする観測値$x$において確率分布が$p(x)\neq0$の場合、潜在的に割り当てることができる。
+  
+  この章では、以下の３つの確率分布を中心に扱っていく。
+  \begin{enumerate}
+    \item 二項分布
+    \item 多項分布
+    \item ガウス分布
+  \end{enumerate}
+\end{frame}
+
+\subsection{2.1 2値変数}
+\begin{frame}
+  2値確率変数$x={0,1}$を扱う。$x=1$となる確率をパラメータ$\mu$で表す。観測値集合$\bm{D}$の総数は$N$個あり、$x=1$が観測できた回数は$m$回である。
+  \begin{gather*}
+    p(x=1|\mu) =\mu
+  \end{gather*}
+  \begin{gather*}
+    \rm{Bern}(x|\mu) = \mu^x(1-\mu)^{1-x}
+  \end{gather*}
+  \begin{gather*}
+    \rm{Likelifood} = p(\bm{D}|\mu)= \prod_{n=1}^{N} p(x_n|\mu) = \prod_{n=1}^{N} \mu^{x_n}(1-\mu)^{1-x_n}
+  \end{gather*}
+  \begin{gather*}
+    \mu_{ML} = \frac{m}{N}
+  \end{gather*}
+\end{frame}
+
+\subsection{2.3 ガウス分布}
+\begin{frame}
+  \frametitle{Gaussian Distribution}
+  変数が一つ, $\mu$は平均,$\sigma^2$は分散を表す。
+  \begin{gather*}
+     N(x|\mu, \sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp\{-\frac{1}{2\sigma^2}(x-\mu)^2 \} 
+  \end{gather*}
+  変数がD次元ベクトル$\bm{x}$,$\mu$はD次元の平均ベクトル、$\Sigma$は共分散行列を表す。
+  \begin{gather*}
+     N(x|\mu, \Sigma) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma|^{1/2}}\exp\{-\frac{1}{2}(\bm{x}-\mu)^{T} \Sigma^{-1} (\bm{x}-\mu) \} 
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{}
+\end{frame}
 
 \end{document}
